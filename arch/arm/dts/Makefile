@@ -962,6 +962,7 @@ dtb-$(CONFIG_STM32MP15x) += \
 	stm32mp15xx-dhcor-avenger96.dtb \
 	stm32mp151a-kiwi.dtb \
 	stm32mp157caa-thatico-r2x512v10.dtb \
+	stm32mp157caa-thatico-r2x512v12.dtb \
 	stm32mp151aaa-thatico-r2x512v11.dtb \
 	stm32mp151aaa-thatico-r2x512v12.dtb
 
