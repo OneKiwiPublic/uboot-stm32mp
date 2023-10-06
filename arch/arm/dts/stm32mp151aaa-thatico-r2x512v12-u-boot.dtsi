@@ -1,0 +1,130 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR BSD-3-Clause
+/*
+ * Copyright : STMicroelectronics 2022
+ */
+
+#include "stm32mp15-scmi-u-boot.dtsi"
+
+/ {
+	aliases {
+		i2c0 = &i2c1;
+		i2c1 = &i2c2;
+		i2c2 = &i2c3;
+		i2c3 = &i2c4;
+		i2c4 = &i2c5;
+		usb0 = &usbotg_hs;
+	};
+
+	config {
+		u-boot,boot-led = "heartbeat";
+		u-boot,error-led = "error";
+		u-boot,mmc-env-partition = "u-boot-env";
+		st,adc_usb_pd = <&adc1 18>, <&adc1 19>;
+		st,fastboot-gpios = <&gpioa 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+		st,stm32prog-gpios = <&gpioa 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	};
+
+	led {
+		compatible = "gpio-leds";
+		led-r {
+			label = "led-r";
+			gpios = <&gpioc 5 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+			status = "okay";
+		};
+
+		led-g {
+			label = "led-g";
+			gpios = <&gpiob 0 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+			status = "okay";
+		};
+
+		led-b {
+			label = "led-b";
+			gpios = <&gpioc 4 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+			status = "okay";
+		};
+
+		sim-reset {
+			label = "sim-reset";
+			gpios = <&gpiof 7 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+			status = "okay";
+		};
+
+		sim-ext {
+			label = "sim-ext";
+			gpios = <&gpiof 8 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+			status = "okay";
+		};
+
+		sim-sleep {
+			label = "sim-sleep";
+			gpios = <&gpiob 1 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+			status = "okay";
+		};
+
+		sim-enb {
+			label = "sim-enb";
+			gpios = <&gpioi 14 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+			status = "okay";
+		};
+
+		audio-s0 {
+			label = "audio-s0";
+			gpios = <&gpioc 1 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+			status = "okay";
+		};
+
+		audio-s1 {
+			label = "audio-s1";
+			gpios = <&gpioi 2 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+			status = "okay";
+		};
+
+		gpio-pf6 {
+			label = "gpio-pf6";
+			gpios = <&gpiof 6 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+			status = "okay";
+		};
+
+		gpio-pf9 {
+			label = "gpio-pf9";
+			gpios = <&gpiof 9 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+			status = "okay";
+		};
+	};
+};
+
+&adc {
+	status = "okay";
+};
+
+&uart4 {
+	u-boot,dm-pre-reloc;
+};
+
+&uart4_pins_a {
+	u-boot,dm-pre-reloc;
+	pins1 {
+		u-boot,dm-pre-reloc;
+	};
+	pins2 {
+		u-boot,dm-pre-reloc;
+		/* pull-up on rx to avoid floating level */
+		bias-pull-up;
+	};
+};
+
+&usbotg_hs {
+	u-boot,force-b-session-valid;
+};
