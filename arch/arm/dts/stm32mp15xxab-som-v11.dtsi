@@ -68,60 +68,12 @@
 		};
 	};
 
-	led {
-		compatible = "gpio-leds";
-		led-blue {
-			label = "heartbeat";
-			gpios = <&gpiod 11 GPIO_ACTIVE_HIGH>;
-			linux,default-trigger = "heartbeat";
-			default-state = "off";
-		};
-	};
-
 	vin: vin {
 		compatible = "regulator-fixed";
 		regulator-name = "vin";
 		regulator-min-microvolt = <5000000>;
 		regulator-max-microvolt = <5000000>;
 		regulator-always-on;
-	};
-};
-
-&adc {
-	pinctrl-names = "default";
-	pinctrl-0 = <&adc12_usb_cc_pins_a>;
-	vdd-supply = <&vdd>;
-	vdda-supply = <&vdd>;
-	vref-supply = <&vrefbuf>;
-	status = "okay";
-	adc1: adc@0 {
-		status = "okay";
-		/*
-		 * Type-C USB_PWR_CC1 & USB_PWR_CC2 on in18 & in19.
-		 * Use at least 5 * RC time, e.g. 5 * (Rp + Rd) * C:
-		 * 5 * (56 + 47kOhms) * 5pF => 2.5us.
-		 * Use arbitrary margin here (e.g. 5us).
-		 */
-		channel@18 {
-			reg = <18>;
-			st,min-sample-time-ns = <5000>;
-		};
-		channel@19 {
-			reg = <19>;
-			st,min-sample-time-ns = <5000>;
-		};
-	};
-	adc2: adc@100 {
-		status = "okay";
-		/* USB Type-C CC1 & CC2 */
-		channel@18 {
-			reg = <18>;
-			st,min-sample-time-ns = <5000>;
-		};
-		channel@19 {
-			reg = <19>;
-			st,min-sample-time-ns = <5000>;
-		};
 	};
 };
 
@@ -357,91 +309,6 @@
 	mmc-ddr-3_3v;
 	status = "okay";
 };
-
-/*
-&timers1 {
-	/delete-property/dmas;
-	/delete-property/dma-names;
-	status = "disabled";
-	pwm {
-		pinctrl-0 = <&pwm1_pins_a>;
-		pinctrl-1 = <&pwm1_sleep_pins_a>;
-		pinctrl-names = "default", "sleep";
-		status = "okay";
-	};
-	timer@0 {
-		status = "okay";
-	};
-};
-
-&timers3 {
-	/delete-property/dmas;
-	/delete-property/dma-names;
-	status = "disabled";
-	pwm {
-		pinctrl-0 = <&pwm3_pins_a>;
-		pinctrl-1 = <&pwm3_sleep_pins_a>;
-		pinctrl-names = "default", "sleep";
-		status = "okay";
-	};
-	timer@2 {
-		status = "okay";
-	};
-};
-
-&timers4 {
-	/delete-property/dmas;
-	/delete-property/dma-names;
-	status = "disabled";
-	pwm {
-		pinctrl-0 = <&pwm4_pins_a &pwm4_pins_b>;
-		pinctrl-1 = <&pwm4_sleep_pins_a &pwm4_sleep_pins_b>;
-		pinctrl-names = "default", "sleep";
-		status = "okay";
-	};
-	timer@3 {
-		status = "okay";
-	};
-};
-
-&timers5 {
-	/delete-property/dmas;
-	/delete-property/dma-names;
-	status = "disabled";
-	pwm {
-		pinctrl-0 = <&pwm5_pins_a>;
-		pinctrl-1 = <&pwm5_sleep_pins_a>;
-		pinctrl-names = "default", "sleep";
-		status = "okay";
-	};
-	timer@4 {
-		status = "okay";
-	};
-};
-
-&timers6 {
-	/delete-property/dmas;
-	/delete-property/dma-names;
-	status = "disabled";
-	timer@5 {
-		status = "okay";
-	};
-};
-
-&timers12 {
-	/delete-property/dmas;
-	/delete-property/dma-names;
-	status = "disabled";
-	pwm {
-		pinctrl-0 = <&pwm12_pins_a>;
-		pinctrl-1 = <&pwm12_sleep_pins_a>;
-		pinctrl-names = "default", "sleep";
-		status = "okay";
-	};
-	timer@11 {
-		status = "okay";
-	};
-};*/
 
 &uart4 {
 	pinctrl-names = "default", "sleep", "idle";
