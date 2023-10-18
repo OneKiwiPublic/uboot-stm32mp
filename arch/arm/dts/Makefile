@@ -966,7 +966,7 @@ dtb-$(CONFIG_STM32MP15x) += \
 	stm32mp151aaa-thatico-r2x512v11.dtb \
 	stm32mp151aaa-thatico-r2x512v12.dtb \
 	stm32mp157aaa-thatico-r2x512v12.dtb \
-	stm32mp157a-som-v11.dtb
+	stm32mp15xxab-som-v11.dtb
 
 dtb-$(CONFIG_SOC_K3_AM6) += k3-am654-base-board.dtb k3-am654-r5-base-board.dtb
 dtb-$(CONFIG_SOC_K3_J721E) += k3-j721e-common-proc-board.dtb \
