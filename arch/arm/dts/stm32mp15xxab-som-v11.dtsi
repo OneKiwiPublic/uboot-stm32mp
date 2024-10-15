@@ -186,7 +186,7 @@
 
 &gpu {
 	status = "okay";
-	//contiguous-area = <&gpu_reserved>;
+	contiguous-area = <&gpu_reserved>;
 };
 
 &hash1 {
