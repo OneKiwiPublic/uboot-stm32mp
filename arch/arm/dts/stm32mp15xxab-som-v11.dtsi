@@ -86,6 +86,17 @@
 		regulator-max-microvolt = <5000000>;
 		regulator-always-on;
 	};
+
+	hdmi {
+		compatible = "hdmi-connector";
+		type = "a";
+
+		port {
+			hdmi_connector_in: endpoint {
+				remote-endpoint = <&lt8912_hdmi_out>;
+			};
+		};
+	};
 };
 
 &adc {
@@ -134,6 +145,33 @@
 	status = "okay";
 };
 
+&dsi{
+	status = "okay";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	ports {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		port@0 {
+			reg = <0>;
+			dsi_in: endpoint {
+				remote-endpoint = <&ltdc_ep0_out>;
+			};
+		};
+
+		port@1 {
+			reg = <1>;
+			dsi_out: endpoint {
+				remote-endpoint = <&lt8912_in>;
+				attach-bridge;
+			};
+		};
+	};
+};
+
 &dma1 {
 	sram = <&dma_pool>;
 };
@@ -147,7 +185,8 @@
 };
 
 &gpu {
-	contiguous-area = <&gpu_reserved>;
+	status = "okay";
+	//contiguous-area = <&gpu_reserved>;
 };
 
 &hash1 {
@@ -309,6 +348,36 @@
 			status = "disabled";
 		};
 	};
+
+	mipi_dsi_hdmi: lt8912@48 {
+		compatible = "lontium,lt8912";
+		dsi-lanes = <2>;
+		reg = <0x48>;
+		ddc-i2c-bus = <&i2c4>;
+		reset-gpios = <&gpioa 12 GPIO_ACTIVE_LOW>;
+		//hpd-gpios = <&gpiod 15 GPIO_ACTIVE_HIGH>;
+		swap-mipi-pn;
+		status = "okay";
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@0 {
+				reg = <0>;
+				lt8912_in: endpoint {
+					remote-endpoint = <&dsi_out>;
+				};
+			};
+
+			port@1 {
+				reg = <1>;
+				lt8912_hdmi_out: endpoint {
+					remote-endpoint = <&hdmi_connector_in>;
+				};
+			};
+		};
+	};
 };
 
 &ipcc {
@@ -318,6 +387,20 @@
 &iwdg2 {
 	timeout-sec = <32>;
 	status = "okay";
+};
+
+&ltdc{
+	status = "okay";
+
+	port {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		ltdc_ep0_out: endpoint@0 {
+			reg = <0>;
+			remote-endpoint = <&dsi_in>;
+		};
+	};
 };
 
 &m4_rproc {
