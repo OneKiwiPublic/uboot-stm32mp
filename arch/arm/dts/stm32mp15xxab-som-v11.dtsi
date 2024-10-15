@@ -355,8 +355,8 @@
 		reg = <0x48>;
 		ddc-i2c-bus = <&i2c4>;
 		reset-gpios = <&gpioa 12 GPIO_ACTIVE_LOW>;
-		//hpd-gpios = <&gpiod 15 GPIO_ACTIVE_HIGH>;
-		swap-mipi-pn;
+		hpd-gpios = <&gpioa 11 GPIO_ACTIVE_HIGH>;
+		//swap-mipi-pn;
 		status = "okay";
 
 		ports {
