@@ -75,6 +75,19 @@
 		regulator-max-microvolt = <5000000>;
 		regulator-always-on;
 	};
+
+	hdmi {
+		compatible = "hdmi-connector";
+		type = "a";
+		ddc-i2c-bus = <&i2c4>;
+		hpd-gpios = <&gpioa 11 GPIO_ACTIVE_HIGH>;
+
+		port {
+			hdmi_connector_in: endpoint {
+				remote-endpoint = <&lt8912_hdmi_out>;
+			};
+		};
+	};
 };
 
 &arm_wdt {
@@ -101,11 +114,25 @@
 	status = "okay";
 };
 
+&dsi {
+	status = "okay";
+	ports {
+		port@1 {
+			dsi_out: endpoint {
+				remote-endpoint = <&lt8912_in>;
+				//data-lanes = <1 2>;
+				attach-bridge;
+			};
+		};
+	};
+};
+
 &dts {
 	status = "okay";
 };
 
 &gpu {
+	status = "okay";
 	contiguous-area = <&gpu_reserved>;
 };
 
@@ -265,6 +292,55 @@
 		watchdog {
 			compatible = "st,stpmic1-wdt";
 			status = "disabled";
+		};
+	};
+
+	mipi_dsi_hdmi: lt8912@48 {
+		compatible = "lontium,lt8912b";
+		reg = <0x48>;
+		reset-gpios = <&gpioa 12 GPIO_ACTIVE_LOW>;
+		//swap-mipi-pn;
+		status = "okay";
+
+		display-timings {
+			native-mode = <&timing0>;
+			timing0:timing0{
+				clock-frequency = <51200000>;
+
+				hactive = <1024>;
+				hsync-len = <20>;
+				hback-porch = <162>;
+				hfront-porch = <140>;
+				vactive = <600>;
+				vsync-len = <3>;
+				vback-porch = <20>;
+				vfront-porch = <12>;
+
+				vsync-active = <0>;
+				hsync-active =<0>;
+				de-active =<0>;
+				pixelclk-active =<0>;
+			};
+		};
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@0 {
+				reg = <0>;
+				lt8912_in: endpoint {
+					data-lanes = <0 1>;
+					remote-endpoint = <&dsi_out>;
+				};
+			};
+
+			port@1 {
+				reg = <1>;
+				lt8912_hdmi_out: endpoint {
+					remote-endpoint = <&hdmi_connector_in>;
+				};
+			};
 		};
 	};
 };
