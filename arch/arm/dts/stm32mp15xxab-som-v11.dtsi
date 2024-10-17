@@ -79,8 +79,6 @@
 	hdmi {
 		compatible = "hdmi-connector";
 		type = "a";
-		ddc-i2c-bus = <&i2c4>;
-		hpd-gpios = <&gpioa 11 GPIO_ACTIVE_HIGH>;
 
 		port {
 			hdmi_connector_in: endpoint {
@@ -298,10 +296,15 @@
 	mipi_dsi_hdmi: lt8912@48 {
 		compatible = "lontium,lt8912b";
 		reg = <0x48>;
+		ddc-i2c-bus = <&i2c4>;
 		reset-gpios = <&gpioa 12 GPIO_ACTIVE_LOW>;
+		hpd-gpios = <&gpioa 11 GPIO_ACTIVE_HIGH>;
+		//no-hpd;
+		//no-edid;
 		//swap-mipi-pn;
 		status = "okay";
 
+		/*
 		display-timings {
 			native-mode = <&timing0>;
 			timing0:timing0{
@@ -321,7 +324,7 @@
 				de-active =<0>;
 				pixelclk-active =<0>;
 			};
-		};
+		};*/
 
 		ports {
 			#address-cells = <1>;
