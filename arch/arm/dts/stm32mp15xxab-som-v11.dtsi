@@ -298,8 +298,8 @@
 		reg = <0x48>;
 		ddc-i2c-bus = <&i2c4>;
 		reset-gpios = <&gpioa 12 GPIO_ACTIVE_LOW>;
-		hpd-gpios = <&gpioa 11 GPIO_ACTIVE_HIGH>;
-		//no-hpd;
+		//hpd-gpios = <&gpioa 11 GPIO_ACTIVE_HIGH>;
+		no-hpd;
 		//no-edid;
 		//swap-mipi-pn;
 		status = "okay";
